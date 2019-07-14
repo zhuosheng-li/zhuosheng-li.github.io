@@ -7,6 +7,7 @@ game.addFailedFn(failed)
 var mask = document.querySelector('.mask')
 var restartButton = document.querySelector('.restart')
 var score = document.querySelector('.score')
+var canvas = document.querySelector('canvas')
 
 restartButton.addEventListener('click', restart)
 
@@ -56,4 +57,18 @@ FallMusic.loop = false;
 // 禁止移动端长按弹出菜单
 document.addEventListener('contextmenu', function (e) {
   e.preventDefault();
+
 })
+// console.log(canvas);
+canvas.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+});
+
+//阻止默认长按出现菜单
+window.ontouchstart = function (e) {
+  e.preventDefault();
+};
+
+canvas.ontouchstart = function (e) {
+  e.preventDefault();
+};
