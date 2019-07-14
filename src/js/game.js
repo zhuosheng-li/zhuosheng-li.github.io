@@ -7,9 +7,9 @@ var Game = function () {
     ground: -1, // 地面y坐标
     fallingSpeed: 0.2, // 游戏失败掉落速度
     cubeColor: 0xbebebe,
-    cubeWidth: 3, // 方块宽度
-    cubeHeight: 1, // 方块高度
-    cubeDeep: 3, // 方块深度
+    cubeWidth: 4, // 方块宽度
+    cubeHeight: 1.5, // 方块高度
+    cubeDeep: 4, // 方块深度
     // cubeWidth: 4, // 方块宽度
     // cubeHeight: 2, // 方块高度
     // cubeDeep: 4, // 方块深度
@@ -576,7 +576,7 @@ Game.prototype = {
     var headGeometry = new THREE.SphereGeometry(this.config.jumperDeep / 2, 32, 32);
 
     // 移动
-    bodyGeometry.translate(0, 1, 0)
+    bodyGeometry.translate(0, 1.5, 0)
     headGeometry.translate(0, 2.4, 0);
 
     // 贴材料
@@ -617,6 +617,9 @@ Game.prototype = {
   _createCube: function () {
     var geometryObj = this._createGeometry(); // 生成一个集合体
     var materialObj = this._createMaterial()(); // 生成材质
+
+    // const material = new THREE.MeshLambertMaterial({ color: this.config.cubeColor })
+    // const geometry = new THREE.CubeGeometry(this.config.cubeWidth, this.config.cubeHeight, this.config.cubeDeep)
 
     var mesh = new THREE.Mesh(geometryObj.geometry, materialObj.material)
     mesh.castShadow = true; // 产生阴影
@@ -693,11 +696,11 @@ Game.prototype = {
         type: 'DefaultCubeColor'
       },
       RandomColor(), // 随机颜色
-      clockMaterial(), // 贴图
-      RadialGradient(),
-      RadialGradient2(),
+      // clockMaterial(), // 贴图
+      // RadialGradient(),
+      // RadialGradient2(),
       // Chess(),
-      wireFrame(),
+      // wireFrame(),
     ];
 
     return function (idx) {
@@ -707,103 +710,103 @@ Game.prototype = {
       return materials[idx];
     }
 
-    function clockMaterial() {
-      var texture;
-      var matArray = []; // 多贴图数组
+    // function clockMaterial() {
+    //   var texture;
+    //   var matArray = []; // 多贴图数组
 
-      texture = new THREE.CanvasTexture(canvasTexture); // 此处的canvasTexture来自canvas.texture.js文件
-      texture.needsUpdate = true;
+    //   texture = new THREE.CanvasTexture(canvasTexture); // 此处的canvasTexture来自canvas.texture.js文件
+    //   texture.needsUpdate = true;
 
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshBasicMaterial({ map: texture }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshBasicMaterial({ map: texture }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
 
-      return {
-        material: matArray,
-        type: 'Clock'
-      }
-    }
+    //   return {
+    //     material: matArray,
+    //     type: 'Clock'
+    //   }
+    // }
 
-    function RadialGradient() {
-      var texture;
-      var matArray = []; // 多贴图数组
+    // function RadialGradient() {
+    //   var texture;
+    //   var matArray = []; // 多贴图数组
 
-      var canvasTexture1 = document.createElement("canvas");
-      canvasTexture1.width = 16;
-      canvasTexture1.height = 16;
-      var ctx = canvasTexture1.getContext("2d");
-      // 创建渐变
-      var grd = ctx.createRadialGradient(50, 50, 32, 60, 60, 100);
-      grd.addColorStop(0, "red");
-      grd.addColorStop(1, "white");
-      // 填充渐变
-      ctx.fillStyle = grd;
-      ctx.fillRect(10, 10, 150, 80);
+    //   var canvasTexture1 = document.createElement("canvas");
+    //   canvasTexture1.width = 16;
+    //   canvasTexture1.height = 16;
+    //   var ctx = canvasTexture1.getContext("2d");
+    //   // 创建渐变
+    //   var grd = ctx.createRadialGradient(50, 50, 32, 60, 60, 100);
+    //   grd.addColorStop(0, "red");
+    //   grd.addColorStop(1, "white");
+    //   // 填充渐变
+    //   ctx.fillStyle = grd;
+    //   ctx.fillRect(10, 10, 150, 80);
 
-      texture = new THREE.CanvasTexture(canvasTexture1);
-      texture.needsUpdate = true;
-      texture.wrapS = texture.wrapT = THREE.RepeatWrapping; // 指定重复方向为两个方向
-      texture.repeat.set(5, 5); // 设置重复次数都为4
+    //   texture = new THREE.CanvasTexture(canvasTexture1);
+    //   texture.needsUpdate = true;
+    //   texture.wrapS = texture.wrapT = THREE.RepeatWrapping; // 指定重复方向为两个方向
+    //   texture.repeat.set(5, 5); // 设置重复次数都为4
 
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshBasicMaterial({ map: texture }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshBasicMaterial({ map: texture }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
 
-      return {
-        material: matArray,
-        type: 'RadialGradient'
-      }
-    }
+    //   return {
+    //     material: matArray,
+    //     type: 'RadialGradient'
+    //   }
+    // }
 
-    function RadialGradient2() {
+    // function RadialGradient2() {
 
-      var canvas = document.createElement('canvas');
-      canvas.width = 16;
-      canvas.height = 16;
+    //   var canvas = document.createElement('canvas');
+    //   canvas.width = 16;
+    //   canvas.height = 16;
 
-      var context = canvas.getContext('2d');
-      var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2);
-      gradient.addColorStop(0, 'rgba(255,255,255,1)');
-      gradient.addColorStop(0.2, 'rgba(0,255,255,1)');
-      gradient.addColorStop(0.4, 'rgba(0,0,64,1)');
-      gradient.addColorStop(1, 'rgba(0,0,0,1)');
+    //   var context = canvas.getContext('2d');
+    //   var gradient = context.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, canvas.width / 2);
+    //   gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    //   gradient.addColorStop(0.2, 'rgba(0,255,255,1)');
+    //   gradient.addColorStop(0.4, 'rgba(0,0,64,1)');
+    //   gradient.addColorStop(1, 'rgba(0,0,0,1)');
 
-      context.fillStyle = gradient;
-      context.fillRect(0, 0, canvas.width, canvas.height);
+    //   context.fillStyle = gradient;
+    //   context.fillRect(0, 0, canvas.width, canvas.height);
 
-      var matArray = []; // 多贴图数组
-      var texture = new THREE.Texture(canvas);
-      texture.needsUpdate = true;
+    //   var matArray = []; // 多贴图数组
+    //   var texture = new THREE.Texture(canvas);
+    //   texture.needsUpdate = true;
 
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshBasicMaterial({ map: texture }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
-      matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshBasicMaterial({ map: texture }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
+    //   matArray.push(new THREE.MeshLambertMaterial({ color: config.cubeColor }));
 
-      return {
-        material: matArray,
-        type: 'RadialGradient2'
-      }
-    }
+    //   return {
+    //     material: matArray,
+    //     type: 'RadialGradient2'
+    //   }
+    // }
 
-    function Chess() {
-      var texture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/Ovilia/ThreeExample.js/master/img/chess.png');
-      texture.wrapS = texture.wrapT = THREE.RepeatWrapping; // 指定重复方向为两个方向
-      texture.repeat.set(2, 2); // 设置重复次数都为4
+    // function Chess() {
+    //   var texture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/Ovilia/ThreeExample.js/master/img/chess.png');
+    //   texture.wrapS = texture.wrapT = THREE.RepeatWrapping; // 指定重复方向为两个方向
+    //   texture.repeat.set(2, 2); // 设置重复次数都为4
 
-      return {
-        material: new THREE.MeshBasicMaterial({ map: texture }),
-        type: 'Chess'
-      }
-    }
+    //   return {
+    //     material: new THREE.MeshBasicMaterial({ map: texture }),
+    //     type: 'Chess'
+    //   }
+    // }
 
     function RandomColor() {
       var color = '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -814,12 +817,12 @@ Game.prototype = {
       }
     }
 
-    function wireFrame() {
-      return {
-        material: new THREE.MeshLambertMaterial({ color: config.cubeColor, wireframe: true }),
-        type: 'wireFrame'
-      }
-    }
+    // function wireFrame() {
+    //   return {
+    //     material: new THREE.MeshLambertMaterial({ color: config.cubeColor, wireframe: true }),
+    //     type: 'wireFrame'
+    //   }
+    // }
 
   },
 
