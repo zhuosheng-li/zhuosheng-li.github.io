@@ -37,13 +37,13 @@ function success(score) {
 }
 
 // 背景音乐/音效
-function audioBgm() {
-  var bgm = new Audio('./src/bgm.mp3');
-  bgm.volume = .05
-  bgm.play();
-  return bgm;
-}
-var bgm = audioBgm();
+// function audioBgm() {
+//   var bgm = new Audio('./src/bgm.mp3');
+//   bgm.volume = .05
+//   bgm.play();
+//   return bgm;
+// }
+// var bgm = audioBgm();
 
 var ActMusic = new Audio('./src/jump.mp3');
 ActMusic.volume = .05;
